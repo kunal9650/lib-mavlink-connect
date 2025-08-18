@@ -36,8 +36,6 @@ class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext)
 
     @ReactMethod
     fun initConnection(mode: String, promise: Promise) {
-        Log.d(NAME, "TCP initConnection called with mode: $mode")
-
         val ctrl = getController()
         ctrl.connectionType(mode.uppercase())
         

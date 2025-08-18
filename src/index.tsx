@@ -1,5 +1,2 @@
-import LibMavlinkConnect from './NativeLibMavlinkConnect';
-
-export function multiply(a: number, b: number): number {
-  return LibMavlinkConnect.multiply(a, b);
-}
+// Re-export the connection manager and types
+export { connectionManager, type ConnectionMode } from './connectionManager';
