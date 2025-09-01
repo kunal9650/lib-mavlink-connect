@@ -14,9 +14,11 @@ class ConnectionManager {
     return LibMavlinkConnect.initConnection(mode);
   }
 
-  /**
-   * Stop the specified connection mode
-   */
+  async dispatchCommand(command: string): Promise<string> {
+    console.log(`Dispatching command: ${command}`);
+    return LibMavlinkConnect.dispatchCommand(command);
+  }
+  
   async stopConnection(mode: ConnectionMode): Promise<string> {
     return LibMavlinkConnect.stopConnection(mode);
   }

@@ -125,6 +125,23 @@ class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext)
         promise.resolve(result)
     }
 
+
+    @ReactMethod
+    fun dispatchCommand(command: String,promise: Promise) {
+        val ctrl = controller ?: run {
+            promise.reject("CONTROLLER_NOT_INIT", "Controller not initialized")
+            return
+        }
+
+        try {
+            Log.d(NAME, "dispatchCommand")
+            ctrl.dispatchCommand(command)
+        } catch (e: IllegalArgumentException) {
+            Log.e(NAME, "Invalid DroneCommand:")
+            promise.reject("INVALID_COMMAND", "Unknown DroneCommand: ")
+        }
+    }
+
     @ReactMethod
     fun sendGuidedCommand(command: String, promise: Promise) {
         val ctrl = controller ?: run {

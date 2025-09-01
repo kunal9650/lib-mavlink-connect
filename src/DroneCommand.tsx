@@ -21,6 +21,7 @@
 // // Optional: export the class type for consumers
 // export type { DroneCommand };
 import { NativeModules } from 'react-native';
+import { connectionManager } from './connectionManager';
 
 const { LibMavlinkConnect } = NativeModules;
 
@@ -36,9 +37,18 @@ class DroneCommand {
   /**
    * Generic executor for any command
    */
-  async executeCommand(mode: string): Promise<string> {
-    return `Executing drone command: ${mode}`;
+async executeCommand(mode: string): Promise<string> {
+  try {
+    // If dispatchCommand is async (Promise-based)
+    const result = await connectionManager.dispatchCommand(mode);
+
+    console.log(`Native dispatchCommand returned: ${result}`);
+    return result;
+  } catch (err) {
+    console.error('dispatchCommand failed:', err);
+    throw err;
   }
+}
 
   /**
    * Example: call into native module
