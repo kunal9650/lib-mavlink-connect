@@ -37,20 +37,16 @@ class DroneCommand {
   /**
    * Generic executor for any command
    */
-async #executeCommand(mode: string): Promise<string> {
-  try {
-    // If dispatchCommand is async (Promise-based)
-    const result = await connectionManager.dispatchCommand(mode);
-
-    console.log(`Native dispatchCommand returned: ${result}`);
-    return result;
-  } catch (err) {
-    console.error('dispatchCommand failed:', err);
-    throw err;
-  }
-}
-
-  /**
+  async #executeCommand(mode: string): Promise<string> {
+    try {
+      const result = await connectionManager.dispatchCommand(mode);
+      console.log(`Native dispatchCommand returned: ${result}`);
+      return result;
+    } catch (err) {
+      console.error('dispatchCommand failed:', err);
+      throw err;
+    }
+  }  /**
    * Example: call into native module
    */
   // async dispatchCommand(): Promise<string> {
@@ -60,29 +56,30 @@ async #executeCommand(mode: string): Promise<string> {
   /**
    * Convenience methods (optional)
    */
-  TAKEOFF() {
-    return this.executeCommand(DroneCommand.TAKEOFF);
-  }
+TAKEOFF() {
+  return this.#executeCommand(DroneCommand.TAKEOFF);
+}
 
-  LAND() {
-    return this.executeCommand(DroneCommand.LAND);
-  }
+LAND() {
+  return this.#executeCommand(DroneCommand.LAND);
+}
 
-  ARM() {
-    return this.executeCommand(DroneCommand.ARM);
-  }
+ARM() {
+  return this.#executeCommand(DroneCommand.ARM);
+}
 
-  DISARM() {
-    return this.executeCommand(DroneCommand.DISARM);
-  }
+DISARM() {
+  return this.#executeCommand(DroneCommand.DISARM);
+}
 
-  GUIDED() {
-    return this.executeCommand(DroneCommand.GUIDED);
-  }
+GUIDED() {
+  return this.#executeCommand(DroneCommand.GUIDED);
+}
 
-  RETURN_TO_HOME() {
-    return this.executeCommand(DroneCommand.RETURN_TO_HOME);
-  }
+RETURN_TO_HOME() {
+  return this.#executeCommand(DroneCommand.RETURN_TO_HOME);
+}
+
 }
 
 // Export singleton instance
