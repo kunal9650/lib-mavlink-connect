@@ -37,7 +37,7 @@ class DroneCommand {
   /**
    * Generic executor for any command
    */
-private async executeCommand(mode: string): Promise<string> {
+async executeCommand(mode: string): Promise<string> {
   try {
     // If dispatchCommand is async (Promise-based)
     const result = await connectionManager.dispatchCommand(mode);
@@ -53,9 +53,9 @@ private async executeCommand(mode: string): Promise<string> {
   /**
    * Example: call into native module
    */
-  // private async dispatchCommand(): Promise<string> {
-  //   return LibMavlinkConnect.dispatchCommand();
-  // }
+  async dispatchCommand(): Promise<string> {
+    return LibMavlinkConnect.dispatchCommand();
+  }
 
   /**
    * Convenience methods (optional)
