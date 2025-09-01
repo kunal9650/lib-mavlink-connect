@@ -20,10 +20,7 @@
 
 // // Optional: export the class type for consumers
 // export type { DroneCommand };
-import { NativeModules } from 'react-native';
 import { connectionManager } from './connectionManager';
-
-const { LibMavlinkConnect } = NativeModules;
 
 class DroneCommand {
   // Enum-like constants
@@ -34,9 +31,7 @@ class DroneCommand {
   static readonly GUIDED = 'GUIDED';
   static readonly RETURN_TO_HOME = 'RETURN_TO_HOME';
 
-  /**
-   * Generic executor for any command
-   */
+
   async #executeCommand(mode: string): Promise<string> {
     try {
       const result = await connectionManager.dispatchCommand(mode);
@@ -46,40 +41,34 @@ class DroneCommand {
       console.error('dispatchCommand failed:', err);
       throw err;
     }
-  }  /**
-   * Example: call into native module
-   */
-  // async dispatchCommand(): Promise<string> {
-  //   return LibMavlinkConnect.dispatchCommand();
-  // }
+  }
 
   /**
-   * Convenience methods (optional)
+   * Public convenience methods - these are the only ways users can execute commands
    */
-TAKEOFF() {
-  return this.#executeCommand(DroneCommand.TAKEOFF);
-}
+  async TAKEOFF(): Promise<string> {
+    return this.#executeCommand(DroneCommand.TAKEOFF);
+  }
 
-LAND() {
-  return this.#executeCommand(DroneCommand.LAND);
-}
+  async LAND(): Promise<string> {
+    return this.#executeCommand(DroneCommand.LAND);
+  }
 
-ARM() {
-  return this.#executeCommand(DroneCommand.ARM);
-}
+  async ARM(): Promise<string> {
+    return this.#executeCommand(DroneCommand.ARM);
+  }
 
-DISARM() {
-  return this.#executeCommand(DroneCommand.DISARM);
-}
+  async DISARM(): Promise<string> {
+    return this.#executeCommand(DroneCommand.DISARM);
+  }
 
-GUIDED() {
-  return this.#executeCommand(DroneCommand.GUIDED);
-}
+  async GUIDED(): Promise<string> {
+    return this.#executeCommand(DroneCommand.GUIDED);
+  }
 
-RETURN_TO_HOME() {
-  return this.#executeCommand(DroneCommand.RETURN_TO_HOME);
-}
-
+  async RETURN_TO_HOME(): Promise<string> {
+    return this.#executeCommand(DroneCommand.RETURN_TO_HOME);
+  }
 }
 
 // Export singleton instance
