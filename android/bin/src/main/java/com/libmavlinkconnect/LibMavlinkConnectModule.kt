@@ -116,6 +116,8 @@ class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext)
     fun getMavlinkDataJson(promise: Promise) {
         val ctrl = controller ?: run {
             promise.reject("CONTROLLER_NOT_INIT", "Controller not initialized")
+            Log.d(NAME, "CONTROLLER_NOT_INIT")
+
             return
         }
         val result = ctrl.getMavlinkDataJson()

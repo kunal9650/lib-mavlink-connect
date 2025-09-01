@@ -162,6 +162,7 @@ class ConnectionManager {
   /**
    * Initialize serial connection with error handling
    */
+
   async initSerialConnection(): Promise<{
     success: boolean;
     message?: string;
@@ -201,3 +202,4 @@ export const connectionManager = new ConnectionManager();
 
 // Export types for external use
 export type { ConnectionMode };
+
