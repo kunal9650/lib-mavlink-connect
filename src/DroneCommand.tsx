@@ -30,6 +30,8 @@ class DroneCommand {
   static readonly DISARM = 'DISARM';
   static readonly GUIDED = 'GUIDED';
   static readonly RETURN_TO_HOME = 'RETURN_TO_HOME';
+  static readonly LOITER = 'LOITER';
+
 
 
   async #executeCommand(mode: string): Promise<string> {
@@ -69,6 +71,10 @@ class DroneCommand {
   async RETURN_TO_HOME(): Promise<string> {
     return this.#executeCommand(DroneCommand.RETURN_TO_HOME);
   }
+  async LOITER(): Promise<string> {
+    return this.#executeCommand(DroneCommand.LOITER);
+  }
+
 }
 
 // Export singleton instance
