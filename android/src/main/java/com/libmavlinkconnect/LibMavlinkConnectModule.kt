@@ -12,6 +12,7 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.facebook.react.module.annotations.ReactModule
 import com.android.mavlinkconnectsdk.Controller
+import com.facebook.react.bridge.ReadableMap  
 
 @ReactModule(name = LibMavlinkConnectModule.NAME)
 class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext) :
