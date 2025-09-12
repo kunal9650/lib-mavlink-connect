@@ -4,11 +4,14 @@ class DroneAction {
   // Enum-like constants
   static readonly TAKEOFF = 'TAKEOFF';
 
-  // Use number instead of int
-  async #executeCommand(mode: string, param1: number, param2: number): Promise<string> {
+  // Accept params as an object for flexibility
+  async #executeCommand(
+    mode: string,
+    params: Record<string, number> = {}
+  ): Promise<string> {
     try {
-      console.log(`Executing command: ${mode} with params: ${param1}, ${param2}`);
-      const result = await connectionManager.dispatchCommand(mode);
+      console.log(`Executing command: ${mode} with params:`, params);
+      const result = await connectionManager.dispatchAction(mode, params);
       console.log(`Native dispatchCommand returned: ${result}`);
       return result;
     } catch (err) {
@@ -18,10 +21,10 @@ class DroneAction {
   }
 
   /**
-   * Public convenience methods - these are the only ways users can execute commands
+   * Public convenience methods
    */
-  async TAKEOFF(param1: number, param2: number) {
-    return this.#executeCommand(DroneAction.TAKEOFF, param1, param2);
+  async TAKEOFF(altitude: number) {
+    return this.#executeCommand(DroneAction.TAKEOFF, { altitude });
   }
 }
 

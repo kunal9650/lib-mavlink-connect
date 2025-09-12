@@ -19,6 +19,14 @@ class ConnectionManager {
     return LibMavlinkConnect.dispatchCommand(command);
   }
   
+  async dispatchAction(
+      command: string,
+      params: { [key: string]: number }
+    ): Promise<string> {
+      console.log(`Dispatching command: ${command}`, params);
+      return LibMavlinkConnect.dispatchCommand(command, params);
+  }  
+
   async stopConnection(mode: ConnectionMode): Promise<string> {
     return LibMavlinkConnect.stopConnection(mode);
   }

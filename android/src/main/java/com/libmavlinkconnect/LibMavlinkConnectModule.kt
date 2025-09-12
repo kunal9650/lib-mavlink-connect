@@ -143,6 +143,33 @@ class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext)
     }
 
     @ReactMethod
+    fun dispatchAction(command: String, params: ReadableMap, promise: Promise) {
+        val ctrl = controller ?: run {
+            promise.reject("CONTROLLER_NOT_INIT", "Controller not initialized")
+            return
+        }
+
+        try {
+            Log.d(NAME, "dispatchAction called with $command and params: $params")
+
+            // Convert ReadableMap → Kotlin Map<String, Float>
+            val paramMap = mutableMapOf<String, Float>()
+            val iterator = params.keySetIterator()
+            while (iterator.hasNextKey()) {
+                val key = iterator.nextKey()
+                paramMap[key] = params.getDouble(key).toFloat()
+            }
+
+            // Forward to Controller
+            ctrl.dispatchAction(command, paramMap)
+
+            promise.resolve("Command $command dispatched successfully")
+        } catch (e: Exception) {
+            Log.e(NAME, "dispatchAction failed", e)
+            promise.reject("DISPATCH_ERROR", e.message)
+        }
+    }    
+    @ReactMethod
     fun sendGuidedCommand(command: String, promise: Promise) {
         val ctrl = controller ?: run {
             promise.reject("CONTROLLER_NOT_INIT", "Controller not initialized")
