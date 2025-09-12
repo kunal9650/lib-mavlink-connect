@@ -12,7 +12,8 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.facebook.react.module.annotations.ReactModule
 import com.android.mavlinkconnectsdk.Controller
-import com.facebook.react.bridge.ReadableMap  
+import org.json.JSONObject
+import com.facebook.react.bridge.ReadableMap
 
 @ReactModule(name = LibMavlinkConnectModule.NAME)
 class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext) :
@@ -153,23 +154,22 @@ class LibMavlinkConnectModule(private val reactContext: ReactApplicationContext)
         try {
             Log.d(NAME, "dispatchAction called with $command and params: $params")
 
-            // Convert ReadableMap → Kotlin Map<String, Float>
-            val paramMap = mutableMapOf<String, Float>()
+            // Convert ReadableMap → JSONObject → String
+            val json = JSONObject()
             val iterator = params.keySetIterator()
             while (iterator.hasNextKey()) {
                 val key = iterator.nextKey()
-                paramMap[key] = params.getDouble(key).toFloat()
+                json.put(key, params.getDouble(key))
             }
 
-            // Forward to Controller
-            ctrl.dispatchAction(command, paramMap)
-
+            ctrl.dispatchAction(command, json.toString()) // ✅ pass as JSON string
             promise.resolve("Command $command dispatched successfully")
         } catch (e: Exception) {
             Log.e(NAME, "dispatchAction failed", e)
             promise.reject("DISPATCH_ERROR", e.message)
         }
-    }    
+    }
+
     @ReactMethod
     fun sendGuidedCommand(command: String, promise: Promise) {
         val ctrl = controller ?: run {
