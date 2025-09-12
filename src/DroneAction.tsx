@@ -7,7 +7,8 @@ class DroneAction {
   // Use number instead of int
   async #executeCommand(mode: string, param1: number, param2: number): Promise<string> {
     try {
-      const result = await connectionManager.dispatchCommand(mode, param1, param2);
+      console.log(`Executing command: ${mode} with params: ${param1}, ${param2}`);
+      const result = await connectionManager.dispatchCommand(mode);
       console.log(`Native dispatchCommand returned: ${result}`);
       return result;
     } catch (err) {
