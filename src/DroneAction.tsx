@@ -3,6 +3,7 @@ import { connectionManager } from './connectionManager';
 class DroneAction {
   // Enum-like constants
   static readonly TAKEOFF = 'TAKEOFF';
+  static readonly MISSIONSEND = 'MISSIONSEND';
 
   // Accept params as an object for flexibility
   async #executeCommand(
@@ -26,6 +27,10 @@ class DroneAction {
   async TAKEOFF(altitude: number) {
     return this.#executeCommand(DroneAction.TAKEOFF, { altitude });
   }
+  async MISSIONSEND(altitude: number,param1: number,param2: number,param3: number,param4: number,lat: number,lon: number  ) {
+    return this.#executeCommand(DroneAction.MISSIONSEND, { altitude,param1,param2,param3,param4,lat,lon });
+  }
+
 }
 
 export const droneAction = new DroneAction();
